@@ -1,0 +1,56 @@
+﻿@page "/"
+@using Orleans;
+@using OrleansExperiment.Interfaces;
+
+@inject IClusterClient _client;
+
+<h1>Orleans Experiment</h1>
+
+<a target="_blank" href="http://localhost:8080">Dashboard</a>
+
+<hr />
+
+<p>SampleGrain - Simply returns a message</p>
+
+<p>@message</p>
+
+<button class="btn btn-primary" @onclick="Click">Click me</button>
+
+<hr />
+
+<p>PersistentGrain - Write and read from persistent storage (in-memory)</p>
+
+<button class="btn btn-primary" @onclick="Write">Write</button>
+
+<p>@writeMessage</p>
+
+<button class="btn btn-primary" @onclick="Read">Read</button>
+
+<p>@readMessage</p>
+
+@code {
+    private string message = "Press the button";
+    private string readMessage = "";
+    private string writeMessage = "";
+
+    private async Task Click()
+    {
+        var grain = _client.GetGrain<ISampleGrain>(Guid.Empty);
+        message = await grain.Ping("Hello world");
+    }
+
+    private async Task Write()
+    {
+        var grain = _client.GetGrain<IPersistentGrain>(Guid.Empty);
+        var firstName = $"John {DateTime.Now.Ticks}";
+        await grain.Write(firstName);
+        writeMessage = firstName;
+    }
+
+    private async Task Read()
+    {
+        var grain = _client.GetGrain<IPersistentGrain>(Guid.Empty);
+        var firstName = await grain.Read();
+        readMessage = firstName;
+    }
+}

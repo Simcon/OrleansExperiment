@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.OrleansRuntime" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Orleans.Runtime.Abstractions" Version="3.0.2" />
+    <PackageReference Include="OrleansDashboard" Version="3.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrleansExperiment.Interfaces\OrleansExperiment.Interfaces.csproj" />
+    <ProjectReference Include="..\OrleansExperiment.Server\OrleansExperiment.Server.csproj" />
+  </ItemGroup>
+
+</Project>
